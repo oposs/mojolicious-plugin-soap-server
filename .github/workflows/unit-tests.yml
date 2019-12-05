@@ -21,10 +21,14 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
 
     steps:
-    - uses: actions/checkout@v1
 
-    - name: build and test
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Prepare
       run: |
         perl Makefile.PL
         make 3rd
-        make test
+ 
+    - name: Test
+      run: make test
