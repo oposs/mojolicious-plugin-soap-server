@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/3rd
-        key: ${{ runner.os }}-cpan-${{ hashFiles(Makefile.PL) }}
+        key: ${{ runner.os }}-cpan-${{ hashFiles('Makefile.PL') }}
         
     - name: Prepare
       run: perl Makefile.PL
