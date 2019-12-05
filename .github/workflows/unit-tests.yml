@@ -29,7 +29,7 @@ jobs:
       id: cpan-cache
       uses: actions/cache@v1
       with:
-        path: ~/3rd
+        path: 3rd
         key: ${{ matrix.os }}-cpan-${{ hashFiles('Makefile.PL') }}
         
     - name: Prepare
