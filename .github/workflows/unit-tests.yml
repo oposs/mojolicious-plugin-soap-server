@@ -25,10 +25,19 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
+    - name: Cache
+      id: cpan-cache
+      uses: actions/cache@v1
+      with:
+        path: ~/3rd
+        key: ${{ runner.os }}-cpan-${{ hashFiles(Makefile.PL) }}
+        
     - name: Prepare
-      run: |
-        perl Makefile.PL
-        make 3rd
+      run: perl Makefile.PL
+    
+    - name: Make 3rd Party
+      if: steps.cpan-cache.outputs.cache-hit != 'true'
+      run: make 3rd
  
-    - name: Test
+    - name: Run Tests
       run: make test

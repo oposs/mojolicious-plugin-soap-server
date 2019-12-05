@@ -11,4 +11,3 @@ example/nameservice.xsd
 example/nameservice.wsdl
 t/basic.t
 .gitignore
-.travis.yml
