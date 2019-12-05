@@ -20,9 +20,18 @@ jobs:
           - windows-latest
 
         perl:
+          - 5.22
           - 5.26
           - 5.30
 
+        exclude:
+          - os: ubuntu-18.04
+            perl: 5.22
+          - os: windows-latest
+            perl: 5.22
+          - os: windows-latest
+            perl: 5.26
+            
       fail-fast: false
 
     name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
