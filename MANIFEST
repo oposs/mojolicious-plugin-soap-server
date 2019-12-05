@@ -4,8 +4,6 @@ Makefile.PL
 README.md
 CHANGES
 lib/Mojolicious/Plugin/SOAP/Server.pm
-lib/Mojo/SOAP/Client.pm
-example
 example/exsoaple.pl
 example/nameservice.xsd
 example/nameservice.wsdl
