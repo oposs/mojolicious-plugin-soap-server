@@ -20,6 +20,7 @@ WriteMakefile(
     'XML::Compile::SOAP::Mojolicious' => 0,
     'Mojolicious' => '8.26',
     'CGI' => 0,
+    'XML::LibXML' => 0,
   },
   TEST_REQUIRES => { 
   },
