@@ -122,4 +122,4 @@ sub register ($self,$app,$conf={}) {
 
 Mojolicious::Plugin::SOAPServer
 
-=head1 
+=head1
