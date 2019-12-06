@@ -7,7 +7,7 @@ use XML::Compile::SOAP11;
 use XML::Compile::SOAP12;
 use XML::Compile::SOAP::Daemon::CGI;
 use Mojo::Util qw(dumper);
-our $VERSION = '0.1.0';
+our $VERSION = '0.1.1';
 use Carp qw(carp croak);
 
 has wsdl => sub ($self) {

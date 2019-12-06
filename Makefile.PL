@@ -1,4 +1,4 @@
-use 5.010001;
+use 5.020001;
 
 use strict;
 use warnings;
@@ -28,7 +28,7 @@ WriteMakefile(
     'Pod::Markdown::Github' => 0,
   },
   META_MERGE   => {
-    requires  => {perl => '5.010001'},
+    requires  => {perl => '5.020001'},
     resources => {
       license     => 'http://www.opensource.org/licenses/artistic-license-2.0',
       repository  => 'https://github.com/oetiker/mojolicious-plugin-soap-server',
