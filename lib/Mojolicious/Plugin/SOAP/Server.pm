@@ -1,5 +1,93 @@
 package Mojolicious::Plugin::SOAP::Server;
 
+=pod
+
+=begin html
+
+![](https://github.com/oposs/mojolicious-plugin-soap-server/workflows/Unit%20Tests/badge.svg?branch=master)
+
+=end html
+
+=head1 NAME
+
+Mojolicious::Plugin::SOAP::Server - implement a SOAP service
+
+=head1 SYNOPSIS
+
+ use Mojolicious::Lite;
+ use Mojo::File 'curfile';
+
+ plugin 'SOAP::Server' => {
+    wsdl => curfile->sibling('nameservice.wsdl'),
+    xsds => [curfile->sibling('nameservice.xsd')],
+    controller => SoapCtrl->new(x => '1'),
+    endPoint => '/SOAP'
+ };
+
+ app->start;
+
+ package SoapCtrl;
+
+ use Mojo::Base -base,-signatures;
+
+ has 'x' => 2;
+
+ sub getCountries ($self,$server,$params,$controller) {
+    return {
+        country => [qw(Switzerland Germany), $self->x]
+    };
+ }
+
+ sub getNamesInCountry ($self,$server,$params,$controller) {
+    my $name = $params->{parameters}{country};
+    $controller->log->debug("Test Message");
+    if ($name eq 'Die') {
+        die {
+            status => 401,
+            text => 'Unauthorized'
+        };
+    }
+    return {
+        name => [qw(A B C),$name]
+    };
+ }
+
+=head1 DESCRIPTION
+
+The L<Mojolicious::Plugin::SOAP::Server> is a thin wrapper around L<XML::Compile::SOAP::Daemon> which makes it pretty simple to implement SOAP services in perl.
+
+The plugin supports the following configuration options:
+
+=over
+
+=item wsdl
+
+A wsdl filename with definitions for the services provided
+
+=item xsds
+
+An array pointer with xsd files for the data types used in the wsdl.
+
+=item controller
+
+A mojo Object whose methods match the service names defined in the wsdl file.
+
+ sub methodName ($self,$server,$params,$controller) {
+
+see example folder for inspiration.
+
+=item default_cb
+
+A default callback to be called if the requested method does not exist in the controller.
+
+=item endPoint
+
+Where to 'mount' the SOAP service.
+
+=back
+
+=cut
+
 use Mojo::Base 'Mojolicious::Plugin', -signatures;
 
 use XML::Compile::WSDL11;
@@ -7,7 +95,7 @@ use XML::Compile::SOAP11;
 use XML::Compile::SOAP12;
 use XML::Compile::SOAP::Daemon::CGI;
 use Mojo::Util qw(dumper);
-our $VERSION = '0.1.1';
+our $VERSION = '0.1.3';
 use Carp qw(carp croak);
 
 has wsdl => sub ($self) {
@@ -118,8 +206,23 @@ sub register ($self,$app,$conf={}) {
 }
 
 1;
-=head1 NAME
 
-Mojolicious::Plugin::SOAPServer
+=head1 ACKNOWLEDGEMENT
 
-=head1
+This is really just a very thin layer on top of Mark Overmeers great L<XML::Compile::SOAP::Daemon> module. Thanks Mark!
+
+=head1 AUTHOR
+
+S<Tobias Oetiker, E<lt>tobi@oetiker.chE<gt>>
+
+=head1 COPYRIGHT
+
+Copyright OETIKER+PARTNER AG 2019
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.10 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut
