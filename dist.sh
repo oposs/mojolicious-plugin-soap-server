@@ -1,5 +1,6 @@
 #!/bin/sh
 make CHANGES
+make README.md
 make dist
 TAR=`ls -t *.tar.gz|head -1`
 PERL5LIB=`dirname $0`/3rd/lib/perl5 \
